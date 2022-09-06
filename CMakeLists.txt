@@ -10,9 +10,8 @@ INCLUDE_DIRECTORIES(D:/ProgramData/Anaconda3/include)
 link_directories(D:/ProgramData/Anaconda3/libs)
 
 
-aux_source_directory(./src SRC_MAIN)
+aux_source_directory(./src SRC)
 
-add_executable(Example ./tests/Example.cpp ${SRC_MAIN})
-add_executable(ExamplePlot ./tests/ExamplePlot.cpp ${SRC_MAIN})
+add_executable(Example tests/Example.cpp ${SRC})
 
-target_link_libraries(ExamplePlot python39.lib)
+target_link_libraries(Example python39.lib)

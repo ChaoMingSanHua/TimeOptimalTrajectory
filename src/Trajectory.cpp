@@ -494,7 +494,7 @@ VectorXd Trajectory::getVelocity(double time) const {
 
 void Trajectory::outputPhasePlaneTrajectory(double *_s, double *_maxVelocity, double *_velocityMaxPathVelocity,
                                             double *_pathPos, double *_pathVel, int &_length) const {
-    const double stepSize = path.getLength() / 10000.0;
+    const double stepSize = path.getLength() / 20000.0;
     int i = 0;
     for(double s = 0.0; s < path.getLength(); s += stepSize) {
         double maxVelocity = getAccelerationMaxPathVelocity(s);
