@@ -13,21 +13,25 @@ using namespace std;
 using namespace Eigen;
 
 int main() {
+    const int pointNum = 7;
+    double x[pointNum] = {0.0, 0.0, 0.0, 1.1, 1.0, 0.0, 0.0};
+    double y[pointNum] = {0.0, 0.2, 3.0, 2.0, 0.0, 1.0, 0.0};
+    double z[pointNum] = {0.0, 1.0, 0.5, 0.0, 0.0, 0.0, 1.0};
     list<VectorXd> waypoints;
     VectorXd waypoint(3);
-    waypoint << 0.0, 0.0, 0.0;
+    waypoint << x[0], y[0], z[0];
     waypoints.push_back(waypoint);
-    waypoint << 0.0, 0.2, 1.0;
+    waypoint << x[1], y[1], z[1];
     waypoints.push_back(waypoint);
-    waypoint << 0.0, 3.0, 0.5;
+    waypoint << x[2], y[2], z[2];
     waypoints.push_back(waypoint);
-    waypoint << 1.1, 2.0, 0.0;
+    waypoint << x[3], y[3], z[3];
     waypoints.push_back(waypoint);
-    waypoint << 1.0, 0.0, 0.0;
+    waypoint << x[4], y[4], z[4];
     waypoints.push_back(waypoint);
-    waypoint << 0.0, 1.0, 0.0;
+    waypoint << x[5], y[5], z[5];
     waypoints.push_back(waypoint);
-    waypoint << 0.0, 0.0, 1.0;
+    waypoint << x[6], y[6], z[6];
     waypoints.push_back(waypoint);
 
     VectorXd maxAcceleration(3);
@@ -75,18 +79,29 @@ int main() {
     PyObject *PyListAnima1 = PyList_New(k);
     PyObject *PyListAnima2 = PyList_New(k);
     PyObject *PyListAnima3 = PyList_New(k);
-    PyObject *ArgListAnima = PyTuple_New(4);
+    PyObject *PyListAnima4 = PyList_New(pointNum);
+    PyObject *PyListAnima5 = PyList_New(pointNum);
+    PyObject *PyListAnima6 = PyList_New(pointNum);
+    PyObject *ArgListAnima = PyTuple_New(7);
 
     for(int i = 0; i< PyList_Size(PyListAnima1); i++) {
         PyList_SetItem(PyListAnima1, i, PyFloat_FromDouble(positionX[i]));
         PyList_SetItem(PyListAnima2, i, PyFloat_FromDouble(positionY[i]));
         PyList_SetItem(PyListAnima3, i, PyFloat_FromDouble(positionZ[i]));
     }
+    for(int i =0; i< PyList_Size(PyListAnima4); i++) {
+        PyList_SetItem(PyListAnima4, i, PyFloat_FromDouble(x[i]));
+        PyList_SetItem(PyListAnima5, i, PyFloat_FromDouble(y[i]));
+        PyList_SetItem(PyListAnima6, i, PyFloat_FromDouble(z[i]));
+    }
 
     PyTuple_SetItem(ArgListAnima, 0, PyFloat_FromDouble(1));
     PyTuple_SetItem(ArgListAnima, 1, PyListAnima1);
     PyTuple_SetItem(ArgListAnima, 2, PyListAnima2);
     PyTuple_SetItem(ArgListAnima, 3, PyListAnima3);
+    PyTuple_SetItem(ArgListAnima, 4, PyListAnima4);
+    PyTuple_SetItem(ArgListAnima, 5, PyListAnima5);
+    PyTuple_SetItem(ArgListAnima, 6, PyListAnima6);
     PyObject_CallObject(pFuncAnima, ArgListAnima);
 
     PyObject *pFuncPhasePlane = PyObject_GetAttrString(pModuleObject, "phasePlane");
